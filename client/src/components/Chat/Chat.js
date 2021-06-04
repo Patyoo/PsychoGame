@@ -3,6 +3,8 @@ import queryString from 'query-string';
 import io from 'socket.io-client';
 import './Chat.scss';
 import { InfoBar } from '../InfoBar/InfoBar';
+import { Input } from '../Input/Input';
+import { Messages } from '../Messages/Messages';
 
 let socket;
 
@@ -35,7 +37,7 @@ export const Chat = ({ location }) => {
     );
   });
 
-  const sendMessaage = (event) => {
+  const sendMessage = (event) => {
     event.preventDefault();
     if (message) {
       socket.emit('sendMessage', message, () => setMessage('')); //toto este nefunguje
@@ -47,11 +49,8 @@ export const Chat = ({ location }) => {
     <div className="outerContainer">
       <div className="container">
         <InfoBar room={room} />
-        {/* <input
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-          onKeyPress={(event) => event.key === 'Enter' && sendMessaage(event)}
-        /> */}
+        <Messages messages={messages} name={name} />
+        <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
     </div>
   );
